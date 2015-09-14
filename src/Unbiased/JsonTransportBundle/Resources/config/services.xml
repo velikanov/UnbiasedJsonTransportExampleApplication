@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service
+                id="unbiased_json_transport.remote_request_manager"
+                class="Unbiased\JsonTransportBundle\Manager\RemoteRequestManager">
+            <argument>%unbiased_json_transport.transport_service%</argument>
+            <argument>%unbiased_json_transport.transport_class%</argument>
+            <argument>%unbiased_json_transport.bridge_collection%</argument>
+        </service>
+
+        <service
+                id="unbiased_json_transport.buzz_bundle_bridge"
+                class="Unbiased\JsonTransportBundle\Bridge\BuzzBundle\BuzzBundleBridge">
+            <tag name="unbiased_json_transport.bridge" />
+        </service>
+        <service
+                id="unbiased_json_transport.guzzle_bridge"
+                class="Unbiased\JsonTransportBundle\Bridge\Guzzle\GuzzleBridge">
+            <tag name="unbiased_json_transport.bridge" />
+        </service>
+    </services>
+
+</container>
