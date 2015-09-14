@@ -4,7 +4,7 @@ namespace Unbiased\JsonTransportBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Unbiased\JsonTransportBundle\Exception\TransportNotFoundException;
+use Unbiased\JsonTransportBundle\Exception\Transport\TransportNotFoundException;
 
 class ValidationPass implements CompilerPassInterface
 {

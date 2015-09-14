@@ -1,6 +1,6 @@
 <?php
 
-namespace Unbiased\JsonTransportBundle\Exception;
+namespace Unbiased\JsonTransportBundle\Exception\Transport\Bridge;
 
 class BridgeNotFoundException extends \Exception
 {

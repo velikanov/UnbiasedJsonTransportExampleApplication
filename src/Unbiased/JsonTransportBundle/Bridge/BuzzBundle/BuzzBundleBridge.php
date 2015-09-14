@@ -4,7 +4,7 @@ namespace Unbiased\JsonTransportBundle\Bridge\BuzzBundle;
 
 use Buzz\Browser;
 use Unbiased\JsonTransportBundle\Bridge\AbstractTransportBridge;
-use Unbiased\JsonTransportBundle\Exception\InvalidTransportBridgeResponseException;
+use Unbiased\JsonTransportBundle\Exception\Transport\Bridge\InvalidTransportBridgeResponseException;
 
 class BuzzBundleBridge extends AbstractTransportBridge
 {

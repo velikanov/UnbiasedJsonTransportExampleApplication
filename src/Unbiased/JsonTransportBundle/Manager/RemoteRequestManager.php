@@ -4,7 +4,7 @@ namespace Unbiased\JsonTransportBundle\Manager;
 
 use Unbiased\JsonTransportBundle\Bridge\TransportBridgeFactory;
 use Unbiased\JsonTransportBundle\Bridge\TransportBridgeInterface;
-use Unbiased\JsonTransportBundle\Exception\BridgeNotFoundException;
+use Unbiased\JsonTransportBundle\Exception\Transport\Bridge\BridgeNotFoundException;
 
 class RemoteRequestManager
 {

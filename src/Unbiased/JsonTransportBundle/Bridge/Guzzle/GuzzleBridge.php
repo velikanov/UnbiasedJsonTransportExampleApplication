@@ -6,7 +6,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Unbiased\JsonTransportBundle\Bridge\AbstractTransportBridge;
-use Unbiased\JsonTransportBundle\Exception\InvalidTransportBridgeResponseException;
+use Unbiased\JsonTransportBundle\Exception\Transport\Bridge\InvalidTransportBridgeResponseException;
 
 class GuzzleBridge extends AbstractTransportBridge
 {

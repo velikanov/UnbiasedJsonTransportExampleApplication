@@ -33,6 +33,22 @@
                 class="Unbiased\JsonTransportBundle\Bridge\Guzzle\GuzzleBridge">
             <tag name="unbiased_json_transport.bridge" />
         </service>
+
+        <service
+                id="unbiased_json_transport.json_parser"
+                class="Unbiased\JsonTransportBundle\Parser\JsonParser">
+            <argument type="service" id="unbiased_json_transport.location_parser" />
+        </service>
+        <service
+                id="unbiased_json_transport.location_parser"
+                class="Unbiased\JsonTransportBundle\Parser\LocationParser"
+                public="false">
+            <argument type="service" id="unbiased_json_transport.coordinates_parser" />
+        </service>
+        <service
+                id="unbiased_json_transport.coordinates_parser"
+                class="Unbiased\JsonTransportBundle\Parser\CoordinatesParser"
+                public="false" />
     </services>
 
 </container>

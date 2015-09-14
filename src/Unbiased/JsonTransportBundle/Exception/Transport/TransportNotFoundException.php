@@ -1,6 +1,6 @@
 <?php
 
-namespace Unbiased\JsonTransportBundle\Exception;
+namespace Unbiased\JsonTransportBundle\Exception\Transport;
 
 class TransportNotFoundException extends \Exception
 {
