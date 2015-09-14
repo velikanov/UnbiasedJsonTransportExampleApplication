@@ -25,6 +25,6 @@ class RequestDataCommand extends ContainerAwareCommand
     {
         $remoteRequestManager = $this->getContainer()->get('unbiased_json_transport.remote_request_manager');
 
-        $remoteRequestManager->getResponse('http://ya.ru');
+        echo $remoteRequestManager->getResponse('http://ya.ru');
     }
 }

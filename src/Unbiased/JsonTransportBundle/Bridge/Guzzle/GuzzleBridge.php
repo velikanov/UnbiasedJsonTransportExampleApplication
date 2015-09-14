@@ -6,8 +6,13 @@ use Unbiased\JsonTransportBundle\Bridge\AbstractTransportBridge;
 
 class GuzzleBridge extends AbstractTransportBridge
 {
-    public function getClassResponder()
+    public static function getClassResponder()
     {
         return '\GuzzleHttp\Client';
+    }
+
+    public function callUrl($url, $method = 'GET', array $data)
+    {
+        return 'Guzzle';
     }
 }

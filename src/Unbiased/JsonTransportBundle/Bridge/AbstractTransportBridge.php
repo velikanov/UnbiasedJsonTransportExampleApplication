@@ -4,12 +4,12 @@ namespace Unbiased\JsonTransportBundle\Bridge;
 
 abstract class AbstractTransportBridge implements TransportBridgeInterface
 {
-    public function getServiceResponder()
+    public static function getServiceResponder()
     {
         return null;
     }
 
-    public function getClassResponder()
+    public static function getClassResponder()
     {
         return null;
     }

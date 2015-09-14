@@ -4,6 +4,8 @@ namespace Unbiased\JsonTransportBundle\Bridge;
 
 interface TransportBridgeInterface
 {
-    public function getServiceResponder();
-    public function getClassResponder();
+    public static function getServiceResponder();
+    public static function getClassResponder();
+
+    public function callUrl($url, $method = 'GET', array $data);
 }

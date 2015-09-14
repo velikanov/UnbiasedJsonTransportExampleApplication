@@ -11,16 +11,26 @@
             <argument>%unbiased_json_transport.transport_service%</argument>
             <argument>%unbiased_json_transport.transport_class%</argument>
             <argument>%unbiased_json_transport.bridge_collection%</argument>
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
         </service>
+
+        <service
+                id="unbiased_json_transport.transport_bridge_factory"
+                class="Unbiased\JsonTransportBundle\Bridge\TransportBridgeFactory" />
 
         <service
                 id="unbiased_json_transport.buzz_bundle_bridge"
                 class="Unbiased\JsonTransportBundle\Bridge\BuzzBundle\BuzzBundleBridge">
+            <factory service="unbiased_json_transport.transport_bridge_factory" method="createBridge" />
+            <argument type="service" id="buzz" />
             <tag name="unbiased_json_transport.bridge" />
         </service>
         <service
                 id="unbiased_json_transport.guzzle_bridge"
                 class="Unbiased\JsonTransportBundle\Bridge\Guzzle\GuzzleBridge">
+            <factory service="unbiased_json_transport.transport_bridge_factory" method="createBridge" />
             <tag name="unbiased_json_transport.bridge" />
         </service>
     </services>
