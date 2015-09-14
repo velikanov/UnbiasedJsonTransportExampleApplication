@@ -17,6 +17,7 @@ class RequestDataCommand extends ContainerAwareCommand
     {
         $this
             ->setName('unbiased_json_transport:request_data_command')
+            ->addArgument('url')
         ;
     }
 
@@ -29,32 +30,32 @@ class RequestDataCommand extends ContainerAwareCommand
 
         $remoteRequestManager = $container->get('unbiased_json_transport.remote_request_manager');
 
-        $rawResponse = $remoteRequestManager->getResponse('http://ya.ru');
+        $rawResponse = $remoteRequestManager->getResponse($input->getArgument('url'));
 
         $jsonParser = $container->get('unbiased_json_transport.json_parser');
 
-        $test = '{
-            "data": {
-                "locations": [
-                    {
-                        "name": "Eiffel Tower",
-                        "coordinates": {
-                            "lat": 21.12,
-                            "long": 19.56
-                        }
-                    },
-                    {
-                        "name": "Kremlin",
-                        "coordinates": {
-                            "lat": 55.45,
-                            "long": 37.37
-                        }
-                    }
-                ]
-            },
-            "success": true
-        }
-        ';
+//        $test = '{
+//            "data": {
+//                "locations": [
+//                    {
+//                        "name": "Eiffel Tower",
+//                        "coordinates": {
+//                            "lat": 21.12,
+//                            "long": 19.56
+//                        }
+//                    },
+//                    {
+//                        "name": "Kremlin",
+//                        "coordinates": {
+//                            "lat": 55.45,
+//                            "long": 37.37
+//                        }
+//                    }
+//                ]
+//            },
+//            "success": true
+//        }
+//        ';
 
 //        $test = '{
 //            "data": {
@@ -66,8 +67,8 @@ class RequestDataCommand extends ContainerAwareCommand
 //        ';
 
         /** @var SampleObject $sampleObject */
-//        $sampleObject = $jsonParser->parse($rawResponse);
-        $sampleObject = $jsonParser->parse($test);
+        $sampleObject = $jsonParser->parse($rawResponse);
+//        $sampleObject = $jsonParser->parse($test);
 
         /** @var Location $location */
         foreach ($sampleObject->getLocations() as $location) {
