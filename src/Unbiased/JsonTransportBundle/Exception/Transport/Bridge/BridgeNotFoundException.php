@@ -4,6 +4,12 @@ namespace Unbiased\JsonTransportBundle\Exception\Transport\Bridge;
 
 class BridgeNotFoundException extends \Exception
 {
+    /**
+     * @param string $bridgeServiceName
+     * @param int $bridgeClassName
+     * @param int|null $code
+     * @param \Exception|null $previous
+     */
     public function __construct($bridgeServiceName, $bridgeClassName, $code = null, \Exception $previous = null)
     {
         $message = [];

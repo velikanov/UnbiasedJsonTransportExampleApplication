@@ -2,76 +2,52 @@
 
 namespace Unbiased\JsonTransportBundle\Parser;
 
-use Unbiased\JsonTransportBundle\Exception\IncorrectLocationFormatException;
 use Unbiased\JsonTransportBundle\Exception\Transport\InvalidJsonResponseException;
 use Unbiased\JsonTransportBundle\Exception\Transport\MalformedJsonResponseException;
 use Unbiased\JsonTransportBundle\Exception\Transport\UnsuccessfulJsonResponseException;
 use Unbiased\JsonTransportBundle\Model\SampleObject;
+use Unbiased\JsonTransportBundle\Validator\JsonValidatorInterface;
 
 class JsonParser implements JsonParserInterface
 {
+    /** @var JsonParserInterface $locationParser */
     protected $locationParser;
+    /** @var JsonValidatorInterface $jsonValidator */
+    protected $jsonResponseValidator;
 
-    public function __construct(JsonParserInterface $locationParser)
+    /**
+     * @param JsonParserInterface $locationParser
+     * @param JsonValidatorInterface $jsonResponseValidator
+     */
+    public function __construct(JsonParserInterface $locationParser, JsonValidatorInterface $jsonResponseValidator)
     {
         $this->locationParser = $locationParser;
+        $this->jsonResponseValidator = $jsonResponseValidator;
     }
 
+    /**
+     * @param string $jsonString
+     * @return SampleObject
+     * @throws InvalidJsonResponseException
+     * @throws MalformedJsonResponseException
+     * @throws UnsuccessfulJsonResponseException
+     */
     public function parse($jsonString)
     {
         if ($jsonArray = json_decode($jsonString)) {
-            if (!property_exists($jsonArray, 'success')) {
-                throw new MalformedJsonResponseException($jsonString);
-            }
+            if ($this->jsonResponseValidator->validate($jsonArray)) {
+                $sampleObject = new SampleObject();
 
-            if (true !== $jsonArray->success) {
-                if (
-                    property_exists($jsonArray, 'data')
-                    &&
-                    property_exists($jsonArray->data, 'message')
-                    &&
-                    property_exists($jsonArray->data, 'code')
-                ) {
-                    throw new UnsuccessfulJsonResponseException(
-                        $jsonArray->data->message,
-                        $jsonArray->data->code
-                    );
+                foreach ($jsonArray->data->locations as $jsonLocation) {
+                    $location = $this->locationParser->parse($jsonLocation);
+
+                    $sampleObject->addLocation($location);
                 }
 
-                throw new MalformedJsonResponseException($jsonString);
+                return $sampleObject;
             }
-
-            if (
-                !property_exists($jsonArray, 'data')
-                ||
-                (
-                    property_exists($jsonArray, 'data')
-                    &&
-                    !property_exists($jsonArray->data, 'locations')
-                )
-            ) {
-                throw new MalformedJsonResponseException($jsonString);
-            }
-
-            if (
-                property_exists($jsonArray->data, 'locations')
-                &&
-                !is_array($jsonArray->data->locations)
-            ) {
-                throw new MalformedJsonResponseException(json_encode($jsonArray->data->locations));
-            }
-
-            $sampleObject = new SampleObject();
-
-            foreach ($jsonArray->data->locations as $jsonLocation) {
-                $location = $this->locationParser->parse($jsonLocation);
-
-                $sampleObject->addLocation($location);
-            }
-
-            return $sampleObject;
         }
 
-        throw new InvalidJsonResponseException($jsonString);
+        throw new InvalidJsonResponseException(json_last_error(), $jsonString);
     }
 }

@@ -8,9 +8,10 @@ use Unbiased\JsonTransportBundle\Exception\Transport\Bridge\BridgeNotFoundExcept
 
 class RemoteRequestManager
 {
+    /** @var string $transportServiceName */
     protected $transportServiceName;
+    /** @var string $transportClassName */
     protected $transportClassName;
-
     /** @var array $bridgeCollection */
     protected $bridgeCollection;
     /** @var TransportBridgeInterface $bridge */
@@ -18,6 +19,12 @@ class RemoteRequestManager
     /** @var TransportBridgeFactory $transportBridgeFactory */
     protected $transportBridgeFactory;
 
+    /**
+     * @param string $transportServiceName
+     * @param string $transportClassName
+     * @param array $bridgeCollection
+     * @param TransportBridgeFactory $transportBridgeFactory
+     */
     public function __construct(
         $transportServiceName,
         $transportClassName,
@@ -32,6 +39,13 @@ class RemoteRequestManager
         $this->transportBridgeFactory = $transportBridgeFactory;
     }
 
+    /**
+     * @param string $url
+     * @param string $method
+     * @param array $data
+     * @return string
+     * @throws BridgeNotFoundException
+     */
     public function getResponse($url, $method = 'GET', $data = [])
     {
         $bridge = $this->getBridge();
@@ -41,6 +55,10 @@ class RemoteRequestManager
         return $response;
     }
 
+    /**
+     * @return TransportBridgeInterface
+     * @throws BridgeNotFoundException
+     */
     protected function getBridge()
     {
         if (null !== $this->bridge) {
@@ -64,6 +82,11 @@ class RemoteRequestManager
         }
     }
 
+    /**
+     * @param string $scope
+     * @param string $bridgeServiceObjectName
+     * @return TransportBridgeInterface|null
+     */
     protected function getBridgeService($scope, $bridgeServiceObjectName)
     {
         if (null !== $bridgeServiceObjectName) {

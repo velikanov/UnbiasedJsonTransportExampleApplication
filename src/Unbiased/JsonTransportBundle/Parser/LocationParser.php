@@ -4,14 +4,23 @@ namespace Unbiased\JsonTransportBundle\Parser;
 
 use Unbiased\JsonTransportBundle\Exception\IncorrectLocationFormatException;
 use Unbiased\JsonTransportBundle\Model\Location;
+use Unbiased\JsonTransportBundle\Validator\JsonValidatorInterface;
 
 class LocationParser implements JsonParserInterface
 {
-    protected $coordinateParser;
+    /** @var JsonParserInterface $coordinateParser */
+    protected $coordinatesParser;
+    /** @var JsonValidatorInterface $jsonValidator */
+    protected $jsonLocationValidator;
 
-    public function __construct(JsonParserInterface $coordinateParser)
+    /**
+     * @param JsonParserInterface $coordinatesParser
+     * @param JsonValidatorInterface $jsonLocationValidator
+     */
+    public function __construct(JsonParserInterface $coordinatesParser, JsonValidatorInterface $jsonLocationValidator)
     {
-        $this->coordinateParser = $coordinateParser;
+        $this->coordinatesParser = $coordinatesParser;
+        $this->jsonLocationValidator = $jsonLocationValidator;
     }
 
     /**
@@ -23,15 +32,13 @@ class LocationParser implements JsonParserInterface
     {
         $location = new Location();
 
-        if (!property_exists($locationObject, 'name') || !property_exists($locationObject, 'coordinates')) {
-            throw new IncorrectLocationFormatException(json_encode($locationObject));
+        if ($this->jsonLocationValidator->validate($locationObject)) {
+            $location->setName($locationObject->name);
+
+            $coordinates = $this->coordinatesParser->parse($locationObject->coordinates);
+
+            $location->setCoordinates($coordinates);
         }
-
-        $location->setName($locationObject->name);
-
-        $coordinates = $this->coordinateParser->parse($locationObject->coordinates);
-
-        $location->setCoordinates($coordinates);
 
         return $location;
     }

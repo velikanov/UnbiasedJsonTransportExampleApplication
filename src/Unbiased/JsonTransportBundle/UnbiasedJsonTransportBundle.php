@@ -9,6 +9,9 @@ use Unbiased\JsonTransportBundle\DependencyInjection\Compiler\ValidationPass;
 
 class UnbiasedJsonTransportBundle extends Bundle
 {
+    /**
+     * @param ContainerBuilder $container
+     */
     public function build(ContainerBuilder $container)
     {
         parent::build($container);

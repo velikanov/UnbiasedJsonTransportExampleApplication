@@ -10,16 +10,29 @@ class BuzzBundleBridge extends AbstractTransportBridge
 {
     protected $browser;
 
+    /**
+     * @return string
+     */
     public static function getServiceResponder()
     {
         return 'buzz';
     }
 
+    /**
+     * @param Browser $browser
+     */
     public function __construct(Browser $browser)
     {
         $this->browser = $browser;
     }
 
+    /**
+     * @param string $url
+     * @param string $method
+     * @param array $data
+     * @return string
+     * @throws InvalidTransportBridgeResponseException
+     */
     public function callUrl($url, $method = 'GET', array $data)
     {
         $rawResponse = null;

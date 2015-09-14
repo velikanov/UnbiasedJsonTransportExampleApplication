@@ -10,11 +10,21 @@ use Unbiased\JsonTransportBundle\Exception\Transport\Bridge\InvalidTransportBrid
 
 class GuzzleBridge extends AbstractTransportBridge
 {
+    /**
+     * @return string
+     */
     public static function getClassResponder()
     {
         return '\GuzzleHttp\Client';
     }
 
+    /**
+     * @param string $url
+     * @param string $method
+     * @param array $data
+     * @return string
+     * @throws InvalidTransportBridgeResponseException
+     */
     public function callUrl($url, $method = 'GET', array $data)
     {
         switch ($method) {

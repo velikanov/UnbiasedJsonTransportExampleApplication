@@ -38,6 +38,10 @@ EOF;
         return $container;
     }
 
+    /**
+     * @param ContainerBuilder $container
+     * @throws \Unbiased\JsonTransportBundle\Exception\Transport\TransportNotFoundException
+     */
     protected function processContainer(ContainerBuilder $container)
     {
         $validationPass = new ValidationPass();

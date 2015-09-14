@@ -8,6 +8,9 @@ use Symfony\Component\DependencyInjection\Definition;
 
 class TransportCompilerPass implements CompilerPassInterface
 {
+    /**
+     * @param ContainerBuilder $container
+     */
     public function process(ContainerBuilder $container)
     {
         $taggedServices = $container->findTaggedServiceIds('unbiased_json_transport.bridge');

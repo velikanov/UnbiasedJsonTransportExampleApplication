@@ -9,6 +9,10 @@ class TransportBridgeFactory
     /** @var ContainerInterface $container */
     protected static $container;
 
+    /**
+     * @param $bridgeName
+     * @return TransportBridgeInterface|null
+     */
     public static function createBridge($bridgeName)
     {
         if (self::$container->has($bridgeName)) {
@@ -18,6 +22,9 @@ class TransportBridgeFactory
         return null;
     }
 
+    /**
+     * @param ContainerInterface $container
+     */
     public function setContainer(ContainerInterface $container)
     {
         self::$container = $container;

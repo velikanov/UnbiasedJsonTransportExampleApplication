@@ -8,6 +8,10 @@ use Unbiased\JsonTransportBundle\Exception\Transport\TransportNotFoundException;
 
 class ValidationPass implements CompilerPassInterface
 {
+    /**
+     * @param ContainerBuilder $container
+     * @throws TransportNotFoundException
+     */
     public function process(ContainerBuilder $container)
     {
         if (

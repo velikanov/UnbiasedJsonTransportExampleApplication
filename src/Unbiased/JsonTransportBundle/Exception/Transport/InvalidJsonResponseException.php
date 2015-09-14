@@ -4,10 +4,20 @@ namespace Unbiased\JsonTransportBundle\Exception\Transport;
 
 class InvalidJsonResponseException extends \Exception
 {
-    public function __construct($jsonString, $code = null, \Exception $previous = null)
+    /**
+     * @param int $jsonErrorCode
+     * @param string $jsonString
+     * @param int|null $code
+     * @param \Exception|null $previous
+     */
+    public function __construct($jsonErrorCode, $jsonString, $code = null, \Exception $previous = null)
     {
         parent::__construct(
-            'Invalid JSON Response received: '.substr((string)$jsonString, 0, 100).'…',
+            sprintf(
+                'Invalid JSON Response received (code %d): %s…',
+                $jsonErrorCode,
+                substr((string)$jsonString, 0, 100)
+            ),
             $code,
             $previous
         );
