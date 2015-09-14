@@ -2,7 +2,11 @@
 
 namespace Unbiased\JsonTransportBundle\Bridge\Guzzle;
 
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Response;
 use Unbiased\JsonTransportBundle\Bridge\AbstractTransportBridge;
+use Unbiased\JsonTransportBundle\Exception\InvalidTransportBridgeResponseException;
 
 class GuzzleBridge extends AbstractTransportBridge
 {
@@ -13,6 +17,25 @@ class GuzzleBridge extends AbstractTransportBridge
 
     public function callUrl($url, $method = 'GET', array $data)
     {
-        return 'Guzzle';
+        switch ($method) {
+            case 'POST':
+                $request = new Request($method, $url, [], http_build_query($data));
+
+                break;
+            default:
+                $request = new Request($method, $url);
+
+                break;
+        }
+
+        $client = new Client();
+
+        $rawResponse = $client->send($request);
+
+        if (!empty($rawResponse) && $rawResponse instanceof Response) {
+            return $rawResponse->getBody();
+        }
+
+        throw new InvalidTransportBridgeResponseException($rawResponse);
     }
 }

@@ -16,6 +16,6 @@ class BridgeNotFoundException extends \Exception
             $message[] = sprintf('Transport Bridge for Class %s has not been found', $bridgeServiceName);
         }
 
-        parent::__construct($message, $code, $previous);
+        parent::__construct(implode("\n", $message), $code, $previous);
     }
 }

@@ -80,5 +80,5 @@ swiftmailer:
     spool:     { type: memory }
 
 unbiased_json_transport:
-    transport_service: buzz
-#    transport_class: \GuzzleHttp\Client
+#    transport_service: buzz
+    transport_class: \GuzzleHttp\Client
